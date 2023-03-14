@@ -14,8 +14,14 @@ app.get('/notes', (req, res) => {
     res.render('notes.html')
 });
 
+//POST route for notes page
 app.post('/notes', () => {
-    console.info(`${req.method} request received to save note.`)
-
+    console.info(`${req.method} request received to save note.`);
     readAndAppend(JSON.parse(data), noteFile);
 });
+
+//DELETE route for notes page
+app.delete('/notes', () => {
+    console.info(`${req.method} request received to delete note.`);
+    
+})

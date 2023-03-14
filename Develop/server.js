@@ -1,5 +1,4 @@
 const express = require('express');
-const router = express.Router();
 const path = require('path');
 const api = require('./db/db.json');
 
@@ -11,9 +10,12 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
-app.use('/api', api);
+//GET route for api
+app.get('/api', (req, res) => {
+    res.sendFile(api);
+});
 
-app.use(express.static(path.join(__dirname, '/Develop/public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 //GET route for homepage
 app.get('/', (req,res) => {
@@ -24,5 +26,4 @@ app.get('/', (req,res) => {
 //server listener
 app.listen(PORT, () => {
     console.log(`Listening at http://localhost:${PORT}`)
-    (err) ? console.log(err) : console.log('No errors to report.')
 });
