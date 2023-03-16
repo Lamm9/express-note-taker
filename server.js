@@ -18,14 +18,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-//GET route for homepage
+//GET routes for homepage
 app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/index.html'))
+});
+
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'))
 });
 
 //GET route for homepage
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'))
+    console.info(`${req.method} received for notes page.`)
 });
 
 //GET route for api
@@ -47,17 +52,10 @@ app.post('/api/notes', async (req, res) => {
         return
     }  
 
-    // fs.appendFile(__dirname + '/db/db.json', JSON.stringify(myNote, null, 4))
+    fs.appendFile(__dirname + '/db/db.json', JSON.stringify(req.body, null, 4));
 
     res.json({"message": "note saved!"});
 });
-
-//DELETE route for api
-app.delete('/api/notes', async (req, res) => {
-    console.log('Should delete note')
-    const myNote = await readData()
-    console.log(myNote);
-})
 
 //server listener
 app.listen(PORT, () => {
