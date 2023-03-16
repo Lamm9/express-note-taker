@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const api = require('./db/db.json');
 
 const PORT = process.env.PORT || 3001;
 
@@ -12,7 +11,7 @@ app.use(express.urlencoded({ extended: true}));
 
 //GET route for api
 app.get('/api', (req, res) => {
-    res.sendFile(api);
+    res.sendFile(__dirname + '/db/db.json');
 });
 
 app.use(express.static(path.join(__dirname, '/public')));
