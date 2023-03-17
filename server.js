@@ -6,7 +6,6 @@ const readData = async () => {
 }
 
 const express = require('express');
-const { read } = require("node:fs");
 const PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -48,10 +47,13 @@ app.post('/api/notes', async (req, res) => {
     console.log(myNote)
     console.log(req.body)
     if(!req.body.title || !req.body.text){
-        res.json({"message": "You need to provide some tuff"})
+        res.json({"message": "Please fill out both title and text fields."})
         return
     }  
 
+    const dbFile = require('/db/db.json')
+    JSON.stringify(dbFile);
+    
     fs.appendFile(__dirname + '/db/db.json', JSON.stringify(req.body, null, 4));
 
     res.json({"message": "note saved!"});
